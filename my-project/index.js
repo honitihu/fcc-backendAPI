@@ -33,7 +33,7 @@ app.get("/api/", (req, res) => {
   });
 });
 
-app.get("/api/:date", (req, res) => {
+app.get("/api/:date?", (req, res) => {
   const unixTime = Number(req.params.date);
   if (isNaN(unixTime)) {
     res.json({error: "Invalid Date"});
