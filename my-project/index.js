@@ -34,13 +34,20 @@ app.get("/api/", (req, res) => {
 });
 
 app.get("/api/:date?", (req, res) => {
-  const unixTime = Number(req.params.date);
+  if (Date.parse(req.params.date) > 0) {
+    var unixTime = Date.parse(req.params.date);
+    var utcTime = new Date(unixTime).toUTCString();
+    res.json({
+      "unix": unixTime,
+      "utc": utcTime});
+      return;
+  }
+  var unixTime = Number(req.params.date);
   if (isNaN(unixTime)) {
     res.json({error: "Invalid Date"});
     return;
   }
-  const date = new Date(unixTime);
-  const utcTime = date.toUTCString();
+  var utcTime = new Date(unixTime).toUTCString();
   res.json({
     "unix": unixTime,
     "utc": utcTime
